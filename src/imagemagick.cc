@@ -259,47 +259,45 @@ void DoConvert(uv_work_t* req) {
             unsigned int resizewidth;
             unsigned int resizeheight;
 
-            if ( aspectratioExpected > aspectratioOriginal ) {
-                // expected is taller
-                resizewidth  = (unsigned int)( (double)height / (double)image.rows() * (double)image.columns() + 1. );
+            if ( strstr(gravity, "Custom") == NULL ) {
+                xoffset = gravityXoffset;
+                yoffset = gravityYoffset;
                 resizeheight = height;
-                if ( strstr(gravity, "West") != NULL ) {
-                    xoffset = 0;
-                }
-                else if ( strstr(gravity, "East") != NULL ) {
-                    xoffset = (unsigned int)( resizewidth - width );
-                }
-                else if ( strstr(gravity, "Custom") != NULL ) {
-                    xoffset = gravityXoffset;
-                }
-                else {
-                    xoffset = (unsigned int)( (resizewidth - width) / 2. );
-                }
-
-                if ( strstr(gravity, "Custom") == NULL ) {
-                    yoffset = 0;
-                }
+                resizewidth = width;
             }
             else {
-                // expected is wider
-                resizewidth  = width;
-                resizeheight = (unsigned int)( (double)width / (double)image.columns() * (double)image.rows() + 1. );
+                if ( aspectratioExpected > aspectratioOriginal ) {
+                    // expected is taller
+                    resizewidth  = (unsigned int)( (double)height / (double)image.rows() * (double)image.columns() + 1. );
+                    resizeheight = height;
+                    if ( strstr(gravity, "West") != NULL ) {
+                        xoffset = 0;
+                    }
+                    else if ( strstr(gravity, "East") != NULL ) {
+                        xoffset = (unsigned int)( resizewidth - width );
+                    }
+                    else {
+                        xoffset = (unsigned int)( (resizewidth - width) / 2. );
+                    }
 
-                if ( strstr(gravity, "Custom") == NULL ) {
-                    xoffset = 0;
-                }
-                
-                if ( strstr(gravity, "North") != NULL ) {
                     yoffset = 0;
                 }
-                else if ( strstr(gravity, "South") != NULL ) {
-                    yoffset = (unsigned int)( resizeheight - height );
-                }
-                else if ( strstr(gravity, "Custom") != NULL ) {
-                    yoffset = gravityYoffset;
-                }
                 else {
-                    yoffset = (unsigned int)( (resizeheight - height) / 2. );
+                    // expected is wider
+                    resizewidth  = width;
+                    resizeheight = (unsigned int)( (double)width / (double)image.columns() * (double)image.rows() + 1. );
+
+                    xoffset = 0;
+
+                    if ( strstr(gravity, "North") != NULL ) {
+                        yoffset = 0;
+                    }
+                    else if ( strstr(gravity, "South") != NULL ) {
+                        yoffset = (unsigned int)( resizeheight - height );
+                    }
+                    else {
+                        yoffset = (unsigned int)( (resizeheight - height) / 2. );
+                    }
                 }
             }
 
