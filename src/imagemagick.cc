@@ -77,6 +77,8 @@ struct identify_im_ctx : im_ctx_base {
 struct convert_im_ctx : im_ctx_base {
     unsigned int maxMemory;
 
+    unsigned int gravityXoffset;
+    unsigned int gravityYoffset;
     unsigned int width;
     unsigned int height;
     bool strip;
@@ -200,6 +202,7 @@ void DoConvert(uv_work_t* req) {
       && strcmp("SouthEast", gravity)!=0
       && strcmp("SouthWest", gravity)!=0
       && strcmp("None", gravity)!=0
+      && strcmp("Custom", gravity)!=0
     ) {
         context->error = std::string("gravity not supported");
         return;
@@ -260,6 +263,9 @@ void DoConvert(uv_work_t* req) {
                 else if ( strstr(gravity, "East") != NULL ) {
                     xoffset = (unsigned int)( resizewidth - width );
                 }
+                else if ( strstr(gravity, "Custom") != NULL ) {
+                    xoffset = gravityXoffset;
+                }
                 else {
                     xoffset = (unsigned int)( (resizewidth - width) / 2. );
                 }
@@ -275,6 +281,9 @@ void DoConvert(uv_work_t* req) {
                 }
                 else if ( strstr(gravity, "South") != NULL ) {
                     yoffset = (unsigned int)( resizeheight - height );
+                }
+                else if ( strstr(gravity, "Custom") != NULL ) {
+                    yoffset = gravityYoffset;
                 }
                 else {
                     yoffset = (unsigned int)( (resizeheight - height) / 2. );
