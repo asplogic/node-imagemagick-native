@@ -275,13 +275,20 @@ void DoConvert(uv_work_t* req) {
                 else {
                     xoffset = (unsigned int)( (resizewidth - width) / 2. );
                 }
-                yoffset = 0;
+
+                if ( strstr(gravity, "Custom") == NULL ) {
+                    yoffset = 0;
+                }
             }
             else {
                 // expected is wider
                 resizewidth  = width;
                 resizeheight = (unsigned int)( (double)width / (double)image.columns() * (double)image.rows() + 1. );
-                xoffset = 0;
+
+                if ( strstr(gravity, "Custom") == NULL ) {
+                    xoffset = 0;
+                }
+                
                 if ( strstr(gravity, "North") != NULL ) {
                     yoffset = 0;
                 }
