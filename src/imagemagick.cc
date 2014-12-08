@@ -299,22 +299,22 @@ void DoConvert(uv_work_t* req) {
                         yoffset = (unsigned int)( (resizeheight - height) / 2. );
                     }
                 }
-            }
 
-            if (debug) printf( "resize to: %d, %d\n", resizewidth, resizeheight );
-            Magick::Geometry resizeGeometry( resizewidth, resizeheight, 0, 0, 0, 0 );
-            try {
-                image.zoom( resizeGeometry );
-            }
-            catch (std::exception& err) {
-                std::string message = "image.resize failed with error: ";
-                message            += err.what();
-                context->error = message;
-                return;
-            }
-            catch (...) {
-                context->error = std::string("unhandled error");
-                return;
+                if (debug) printf( "resize to: %d, %d\n", resizewidth, resizeheight );
+                Magick::Geometry resizeGeometry( resizewidth, resizeheight, 0, 0, 0, 0 );
+                try {
+                    image.zoom( resizeGeometry );
+                }
+                catch (std::exception& err) {
+                    std::string message = "image.resize failed with error: ";
+                    message            += err.what();
+                    context->error = message;
+                    return;
+                }
+                catch (...) {
+                    context->error = std::string("unhandled error");
+                    return;
+                }
             }
 
             if ( strcmp ( gravity, "None" ) != 0 ) {
