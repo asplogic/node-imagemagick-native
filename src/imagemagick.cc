@@ -259,7 +259,7 @@ void DoConvert(uv_work_t* req) {
             unsigned int resizewidth;
             unsigned int resizeheight;
 
-            if ( strstr(gravity, "Custom") == NULL ) {
+            if ( strstr(gravity, "Custom") != NULL ) {
                 xoffset = gravityXoffset;
                 yoffset = gravityYoffset;
                 resizeheight = height;
