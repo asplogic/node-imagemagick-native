@@ -192,6 +192,12 @@ void DoConvert(uv_work_t* req) {
     if (debug) printf( "resizeStyle: %s\n", resizeStyle );
 
     const char* gravity = context->gravity.c_str();
+    unsigned int gravityXoffset = context->gravityXoffset;
+    if (debug) printf( "gravityXoffset: %d\n", gravityXoffset);
+    
+    unsigned int gravityYoffset = context->gravityYoffset;
+    if (debug) printf( "gravityYoffset: %d\n", gravityYoffset);
+
     if ( strcmp("Center", gravity)!=0
       && strcmp("East", gravity)!=0
       && strcmp("West", gravity)!=0
